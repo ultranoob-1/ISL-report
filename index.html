@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Space Lab: Technical Internship Debrief</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Nunito:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Chosen Palette: Dark Blueprint (Charcoal, Cyan, White) -->
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #111827;
+            /* gray-900 */
+            color: #d1d5db;
+            /* gray-300 */
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .font-mono {
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .main-container {
+            background-color: #1f2937;
+            /* gray-800 */
+            border: 1px solid #374151;
+            /* gray-700 */
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.1);
+        }
+
+        .accent-cyan {
+            color: #22d3ee;
+            /* cyan-400 */
+        }
+
+        .border-accent {
+            border-color: #22d3ee;
+        }
+
+        .toc-link {
+            transition: all 0.2s ease-in-out;
+            border-left: 2px solid transparent;
+            padding-left: 0.5rem;
+        }
+
+        .toc-link:hover {
+            color: #22d3ee;
+            /* cyan-400 */
+            border-left-color: #22d3ee;
+            transform: translateX(5px);
+        }
+
+        .data-card {
+            background: rgba(30, 41, 59, 0.5);
+            /* slate-800 with transparency */
+            border: 1px solid #475569;
+            /* slate-600 */
+            backdrop-filter: blur(4px);
+        }
+
+        .section-divider {
+            height: 1px;
+            border: 0;
+            background: linear-gradient(to right, transparent, #22d3ee, transparent);
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+
+        /* Print-specific styles */
+        @media print {
+            body {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                font-size: 10pt;
+            }
+
+            .main-container {
+                box-shadow: none !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+                border: none !important;
+                background-color: #ffffff !important;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            p,
+            li,
+            span {
+                color: #000000 !important;
+            }
+
+            .print-section {
+                break-before: page;
+            }
+
+            #home,
+            #toc {
+                break-before: avoid-page;
+            }
+
+            .data-card,
+            .bg-slate-900 {
+                background-color: #f3f4f6 !important;
+                /* light gray for print */
+                border: 1px solid #d1d5db !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .chart-container {
+                height: 250px !important;
+            }
+
+            a {
+                color: inherit !important;
+                text-decoration: none !important;
+            }
+
+            .section-divider {
+                background: #cccccc !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900">
+
+    <!-- Main Content -->
+    <main class="main-container max-w-4xl mx-auto p-8 sm:p-12 md:p-16 my-8 sm:my-12 rounded-lg">
+
+        <!-- Section: Title Page -->
+        <section id="home" class="text-center py-16">
+            <span class="text-base font-semibold accent-cyan tracking-widest">INDIA SPACE LAB // DEBRIEF</span>
+            <h1 class="text-4xl md:text-5xl font-bold text-white mt-4">Summer Internship Technical Report</h1>
+            <p class="mt-6 text-lg text-gray-400">An analysis of the core competencies, project work, and technical
+                insights acquired during the Summer 2025 program.</p>
+            <div class="mt-12 space-y-2 font-mono">
+                <p class="text-md text-gray-500">Authored By:</p>
+                <p class="text-xl font-semibold text-white">Aditya Singh</p>
+                <p class="text-md font-medium text-gray-300">ID: ISL-11007821</p>
+                <p class="text-md font-medium text-gray-300">Affiliation: BITS Pilani</p>
+            </div>
+        </section>
+
+        <!-- Section: Table of Contents -->
+        <section id="toc" class="py-10 my-10 print-section">
+            <h2 class="text-2xl font-bold text-white mb-6 border-b-2 border-gray-700 pb-2">Navigation Index</h2>
+            <ul class="space-y-3">
+                <li><a href="#introduction" class="toc-link text-gray-300 font-medium">1.0 // Program Overview</a></li>
+                <li><a href="#module-1" class="toc-link text-gray-300 font-medium">2.0 // Module I: UAV Systems &
+                        Control</a></li>
+                <li><a href="#module-2" class="toc-link text-gray-300 font-medium">3.0 // Module II: Pico-Satellite
+                        Design Lifecycle</a></li>
+                <li><a href="#module-3" class="toc-link text-gray-300 font-medium">4.0 // Module III: Launch Systems &
+                        Propulsion</a></li>
+                <li><a href="#module-4" class="toc-link text-gray-300 font-medium">5.0 // Module IV: Geospatial Data
+                        Analysis</a></li>
+                <li><a href="#module-5" class="toc-link text-gray-300 font-medium">6.0 // Module V: The New Space
+                        Industry</a></li>
+                <li><a href="#conclusion" class="toc-link text-gray-300 font-medium">7.0 // Synthesis & Forward
+                        Trajectory</a></li>
+            </ul>
+        </section>
+
+        <!-- Section: Introduction -->
+        <section id="introduction" class="py-10 print-section">
+            <h2 class="text-3xl font-bold text-white mb-2">1.0 // Program Overview</h2>
+            <p class="text-gray-400 mb-8">This document provides a technical summary of the India Space Lab internship,
+                a program engineered to fuse academic theory with the practical demands of the "New Space" industry. The
+                curriculum followed a logical progression, establishing a strong foundation in aerospace principles
+                before advancing to specialized applications and commercial-sector awareness. This modular approach
+                ensured a deep, interconnected knowledge base.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono">
+                <div class="data-card p-6 rounded-lg text-center">
+                    <span class="text-4xl font-bold accent-cyan">05</span>
+                    <p class="mt-2 text-gray-400 font-medium">Core Modules</p>
+                </div>
+                <div class="data-card p-6 rounded-lg text-center">
+                    <span class="text-4xl font-bold accent-cyan">03</span>
+                    <p class="mt-2 text-gray-400 font-medium">Applied Labs</p>
+                </div>
+                <div class="data-card p-6 rounded-lg text-center">
+                    <span class="text-4xl font-bold accent-cyan">01</span>
+                    <p class="mt-2 text-gray-400 font-medium">Capstone Project</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-10">
+
+        <!-- Section: Module 1 -->
+        <section id="module-1" class="py-10 print-section">
+            <h2 class="text-3xl font-bold text-white">2.0 // Module I: UAV Systems & Control</h2>
+            <p class="mt-2 text-lg text-gray-400 mb-8">A deep dive into Unmanned Aerial Vehicles (UAVs), covering the
+                full spectrum from physical hardware integration to the software logic for autonomous operation.</p>
+            <div class="space-y-8">
+                <div>
+                    <h3 class="font-bold text-xl text-white mb-4">Hardware Integration Lab</h3>
+                    <p class="text-gray-400 mb-4">The module began with the hands-on assembly of a quadcopter drone.
+                        This exercise was crucial for understanding the physical constraints and interdependencies of a
+                        UAV's core components.</p>
+                    <ul class="space-y-3 list-disc list-inside text-gray-400">
+                        <li><strong class="font-semibold text-gray-200">Structural Assembly:</strong> Constructed the
+                            drone's airframe, focusing on achieving maximum rigidity while minimizing mass. Mounted and
+                            balanced the brushless motors to mitigate vibrations.</li>
+                        <li><strong class="font-semibold text-gray-200">Avionics Integration:</strong> Methodically
+                            wired the Power Distribution Board, ESCs, and Flight Controller, emphasizing robust
+                            connections and signal integrity to prevent system failure.</li>
+                        <li><strong class="font-semibold text-gray-200">Firmware & Calibration:</strong> Utilized
+                            mission planning software to flash the flight controller firmware and perform essential
+                            sensor calibrations (IMU, magnetometer), ensuring accurate flight data.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-white mb-4">Autonomous Control Theory</h3>
+                    <p class="text-gray-400 mb-4">The focus then shifted from the physical to the logical, exploring the
+                        algorithms that enable drones to perceive their environment and navigate intelligently.</p>
+                    <ul class="space-y-3 list-disc list-inside text-gray-400">
+                        <li><strong class="font-semibold text-gray-200">Sensor Fusion Algorithms:</strong> Studied how
+                            Kalman filters are used to fuse data from gyroscopes, accelerometers, and GPS to compute a
+                            reliable estimate of the drone's state (position and orientation).</li>
+                        <li><strong class="font-semibold text-gray-200">PID Control Loops:</strong> Gained a practical
+                            understanding of tuning Proportional-Integral-Derivative (PID) controllers, learning how to
+                            optimize flight stability and responsiveness.</li>
+                        <li><strong class="font-semibold text-gray-200">Path Planning:</strong> Explored foundational
+                            pathfinding algorithms like A* and RRT, understanding their application in generating
+                            collision-free trajectories for autonomous missions.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-10">
+
+        <!-- Section: Module 2 -->
+        <section id="module-2" class="py-10 print-section">
+            <h2 class="text-3xl font-bold text-white">3.0 // Module II: Pico-Satellite Design Lifecycle</h2>
+            <p class="mt-2 text-lg text-gray-400 mb-8">A simulated end-to-end satellite mission, from requirements
+                definition to testing, instilling principles of systems engineering and collaborative design.</p>
+            <div class="bg-slate-900 p-8 rounded-xl border border-gray-700">
+                <h3 class="font-bold text-xl text-white mb-2">Capstone: "Project DRISHTI"</h3>
+                <p class="text-gray-400 mb-6">Our capstone project was to design a CanSat capable of capturing a
+                    low-resolution image during its descent and transmitting it to a ground station using Slow-Scan
+                    Television (SSTV).</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-semibold text-gray-200 mb-3">Mission Parameters</h4>
+                        <ul class="space-y-3 text-gray-400 list-disc list-inside">
+                            <li><strong>Primary Goal:</strong> Image acquisition and transmission. Secondary goal was to
+                                log basic atmospheric data (temperature, pressure).</li>
+                            <li><strong>My Contribution:</strong> Led the development of the payload and communications
+                                subsystems. This involved interfacing an OV7670 camera module with the microcontroller
+                                and implementing the SSTV encoding library.</li>
+                            <li><strong>Major Hurdle:</strong> The microcontroller lacked sufficient RAM to buffer a
+                                full image frame, making direct SSTV encoding impossible.</li>
+                            <li><strong>Innovative Solution:</strong> I developed a "line-by-line" processing pipeline.
+                                The code would read a single line of pixels from the camera, process and encode it into
+                                an audio signal for SSTV, transmit it, and then discard the line from memory before
+                                fetching the next one. This minimized RAM usage and made the mission feasible.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-200 mb-3 text-center">Resource Allocation (Conceptual)</h4>
+                        <div class="chart-container">
+                            <canvas id="drishtiChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-10">
+
+        <!-- Section: Module 3 -->
+        <section id="module-3" class="py-10 print-section">
+            <h2 class="text-3xl font-bold text-white">4.0 // Module III: Launch Systems & Propulsion</h2>
+            <p class="mt-2 text-lg text-gray-400 mb-8">An examination of the fundamental physics and engineering
+                challenges associated with achieving orbital and sub-orbital flight.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="font-bold text-xl text-white mb-4">Rocketry Principles</h3>
+                    <ul class="space-y-3 list-disc list-inside text-gray-400">
+                        <li><strong class="font-semibold text-gray-200">Ideal Rocket Equation:</strong> Deconstructed
+                            the Tsiolkovsky rocket equation to understand the critical roles of mass ratio and specific
+                            impulse ($I_{sp}$) in determining a launch vehicle's total $\Delta v$.</li>
+                        <li><strong class="font-semibold text-gray-200">Propulsion Architectures:</strong> Compared
+                            solid vs. liquid propulsion systems, analyzing their respective advantages in thrust,
+                            efficiency, and controllability for different mission phases.</li>
+                        <li><strong class="font-semibold text-gray-200">Dynamic Stability:</strong> Learned the
+                            principle of ensuring the Center of Pressure (CP) is located behind the Center of Gravity
+                            (CG) to maintain aerodynamic stability during ascent.</li>
+                    </ul>
+                </div>
+                <div class="data-card p-6 rounded-lg">
+                    <h3 class="font-bold text-xl text-white mb-4">Model Rocketry Lab</h3>
+                    <p class="text-gray-400">We applied these principles in a practical workshop, building and launching
+                        model rockets. Pre-launch simulations in OpenRocket were used to verify stability and predict
+                        performance. The successful launch and recovery provided a tangible validation of the
+                        theoretical concepts and safety protocols.</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-10">
+
+        <!-- Section: Module 4 -->
+        <section id="module-4" class="py-10 print-section">
+            <h2 class="text-3xl font-bold text-white">5.0 // Module IV: Geospatial Data Analysis</h2>
+            <p class="mt-2 text-lg text-gray-400 mb-8">This module focused on converting raw satellite imagery into
+                actionable intelligence using Geographic Information Systems (GIS).</p>
+            <div class="bg-slate-900 p-8 rounded-xl border border-gray-700">
+                <h3 class="font-bold text-xl text-white mb-2">Case Study: Coastal Erosion Monitoring</h3>
+                <p class="text-gray-400 mb-6">We used QGIS and multi-temporal Landsat imagery to analyze changes in the
+                    coastline of a region in Odisha over a decade. The goal was to quantify erosion and deposition
+                    patterns.</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h4 class="font-semibold text-gray-200 mb-3">Analysis Workflow</h4>
+                        <ul class="space-y-3 text-gray-400 list-disc list-inside">
+                            <li><strong>Water Body Extraction:</strong> Used the Modified Normalized Difference Water
+                                Index (MNDWI) to accurately delineate the boundary between land and water in satellite
+                                images from two different years.</li>
+                            <li><strong>Change Detection:</strong> Converted the raster water maps into vector polygons.
+                                By overlaying the polygons from the two time periods, we could precisely calculate the
+                                area of land lost to erosion and gained through accretion.</li>
+                            <li><strong>Key Finding:</strong> The analysis revealed a net erosion of several hundred
+                                meters in specific high-risk zones, providing critical data for local authorities to
+                                plan mitigation strategies. This demonstrated GIS as a powerful tool for environmental
+                                monitoring.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-200 mb-3 text-center">Conceptual Data Comparison</h4>
+                        <div class="chart-container">
+                            <canvas id="gisChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-10">
+
+        <!-- Section: Module 5 -->
+        <section id="module-5" class="py-10 print-section">
+            <h2 class="text-3xl font-bold text-white">6.0 // Module V: The New Space Industry</h2>
+            <p class="mt-2 text-lg text-gray-400 mb-8">An analysis of the commercial and entrepreneurial forces
+                reshaping the space sector in India and globally.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="font-bold text-xl text-white mb-4">Ecosystem Analysis</h3>
+                    <p class="text-gray-400">We examined the strategic shift in India's space policy, with IN-SPACe
+                        acting as a facilitator for private industry. The discussion focused on the emerging synergy
+                        between ISRO's institutional knowledge and the agile innovation of startups in launch,
+                        satellites, and downstream applications.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-white mb-4">Career Vectoring</h3>
+                    <p class="text-gray-400">The module explored the diversification of career paths in the space
+                        industry, highlighting the growing demand for specialists in data science, AI/ML, robotics,
+                        systems engineering, and non-technical roles like venture capital, law, and policy.</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider my-10">
+
+        <!-- Section: Conclusion -->
+        <section id="conclusion" class="py-10 print-section">
+            <h2 class="text-3xl font-bold text-white">7.0 // Synthesis & Forward Trajectory</h2>
+            <p class="mt-2 text-lg text-gray-400 mb-8">A final assessment of the skills acquired and how this internship
+                has refined my professional and academic direction.</p>
+            <div>
+                <h3 class="font-bold text-xl text-white mb-4">Competency Matrix</h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-400">
+                    <li><strong class="font-semibold text-gray-200">Applied Engineering:</strong> Gained hands-on
+                        proficiency in UAV assembly, satellite subsystem design, rocketry simulation, and GIS software,
+                        bridging the gap between theory and practice.</li>
+                    <li><strong class="font-semibold text-gray-200">Systems Thinking:</strong> Learned to manage project
+                        complexity, interface between different subsystems, and follow a structured design lifecycle, as
+                        demonstrated in the CanSat capstone.</li>
+                    <li><strong class="font-semibold text-gray-200">Analytical Troubleshooting:</strong> Honed the
+                        ability to diagnose and solve complex technical problems, from debugging memory management
+                        issues in embedded C to tracing hardware faults.</li>
+                </ul>
+
+                <div class="my-8 border-t border-gray-700"></div>
+
+                <h3 class="font-bold text-xl text-white mb-4">Future Direction</h3>
+                <p class="text-gray-400">This internship has been a pivotal experience, cementing my passion for space
+                    technology. It has provided me with the clarity to focus my future efforts on autonomous systems and
+                    robotics for in-space applications. The problem-solving skills and practical knowledge gained here
+                    are an invaluable foundation. I am deeply grateful to India Space Lab for this opportunity and am
+                    eager to apply these learnings to tackle future challenges in India's growing space ecosystem.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chartTextColor = '#d1d5db';
+            const chartGridColor = 'rgba(55, 65, 81, 0.5)'; // gray-700 with transparency
+            const accentColor = '#22d3ee';
+            const accentColorTransparent = 'rgba(34, 211, 238, 0.6)';
+
+            // Chart.js CanSat Chart
+            const drishtiCtx = document.getElementById('drishtiChart').getContext('2d');
+            new Chart(drishtiCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Payload (Camera)', 'Comms (SSTV)', 'OBC (Processing)', 'Power', 'Structure'],
+                    datasets: [{
+                        label: 'Resource Allocation',
+                        data: [40, 25, 20, 10, 5],
+                        backgroundColor: [
+                            'rgba(34, 211, 238, 0.8)',
+                            'rgba(34, 211, 238, 0.6)',
+                            'rgba(34, 211, 238, 0.4)',
+                            'rgba(34, 211, 238, 0.2)',
+                            'rgba(34, 211, 238, 0.1)',
+                        ],
+                        borderColor: '#1f2937', // gray-800
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: { color: chartTextColor }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Project DRISHTI: Resource Allocation',
+                            color: chartTextColor
+                        }
+                    }
+                }
+            });
+
+            // Chart.js GIS Chart
+            const gisCtx = document.getElementById('gisChart').getContext('2d');
+            new Chart(gisCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Zone A (High-Risk)', 'Zone B (Stable)', 'Zone C (Accretion)'],
+                    datasets: [{
+                        label: 'Land Change (Hectares) 2015-2025',
+                        data: [-15.5, -1.2, 4.3], // Negative for erosion, positive for accretion
+                        backgroundColor: (context) => {
+                            const value = context.raw;
+                            return value < 0 ? 'rgba(239, 68, 68, 0.7)' : 'rgba(34, 197, 94, 0.7)';
+                        },
+                        borderColor: accentColor,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: 'Coastal Change Analysis (Hectares)',
+                            color: chartTextColor
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Hectares (Erosion/Accretion)', color: chartTextColor },
+                            ticks: { color: chartTextColor },
+                            grid: { color: chartGridColor }
+                        },
+                        x: {
+                            ticks: { color: chartTextColor },
+                            grid: { color: 'transparent' }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
